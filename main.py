@@ -32,6 +32,13 @@ print(myArray, len(myArray))
 myArray.clear()
 print(myArray)
 
-print(1 >> 1)
+# print(1 >> 1)
 
 
+for index in range(10):
+
+    lowestValue = 0
+    print("index1:", index)
+
+    for index2 in range(index + 1, 10):
+        print("index2",index2)

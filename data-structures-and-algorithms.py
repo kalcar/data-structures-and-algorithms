@@ -55,6 +55,9 @@ class Memory():
 
         self.size = size
     
+    def resetOperations(self):
+        self.operations = 0
+
     def clearMemory(self):
         self.memoryAddresses.clear()
         self.operations = 0
@@ -106,12 +109,7 @@ class Memory():
         self.memoryAddresses[index1] = tempVal2
         self.memoryAddresses[index2] = tempVal
 
-
-
-    
-
-
-def linearSearch(memory, value):
+def linearSearch(memory: Memory, value):
     """
     conducts a linear search on the custom class 'memory'
 
@@ -133,8 +131,7 @@ def linearSearch(memory, value):
         if value == memory.read(index):
             return index
 
-
-def binarySearch(memory, upperBound, lowerBound, value):
+def binarySearch(memory: Memory, upperBound: int, lowerBound: int, value):
     """
     conducts a binary search on the custom class 'memory'. upperbound and Lowerbound is for the sake of recursion
 
@@ -180,10 +177,9 @@ def binarySearch(memory, upperBound, lowerBound, value):
     # set the upper bounds to the middle index if the value exists within the lower half of the search space
     elif middleValue > value:
         upperBound = middle
-        return binarySearch(memory, upperBound, lowerBound, value) # call the search again with the new boundaries
-        
+        return binarySearch(memory, upperBound, lowerBound, value) # call the search again with the new boundaries 
 
-def bubbleSort(memory, asc = True):
+def bubbleSort(memory: Memory):
     """
     sorts the internal list in ascending order the custom class 'memory'
 
@@ -219,10 +215,9 @@ def bubbleSort(memory, asc = True):
         # decrement sortedUntil since the loop just confirmed a sorted element at the largest index
         sortedUntil -= 1
     
-    return memory.getList()
-            
+    return memory.getList()      
         
-def hasDuplicates(memory):
+def hasDuplicates(memory: Memory):
     """
     determines if the internal list of the memory class has duplicates
 
@@ -241,14 +236,55 @@ def hasDuplicates(memory):
     for item in range(memory.getSize()): # loop over all items
         value = memory.read(item) # read the item
         items[value] = items.get(value, 0) + 1 # if the key doesnt have a occurance value in dictionary, add it (0) and add 1
-        if items[memory.read(item)] > 1: # if occurances are greater than 1, theres duplicates
+        if items[value] > 1: # if occurances are greater than 1, theres duplicates
             return True
     return False
 
+def selectionSort(memory: Memory):
+    """
+    sorts the internal list in ascending order the custom class 'memory'
 
+    Args:
+        memory (Memory): the custom class that simulates computer memory
+    
+    Returns:
+        list (list): the sorted list
+
+    Raises:
+        Nothing
+
+    """
+    # iterate through every index, finding the lowest value that should be in said index
+    for index in range(memory.getSize() -1):
+
+        lowestValue = memory.read(index)
+        lowestIndex = index
+
+        # find the lowest value in the rest of the array
+        for index2 in range(index + 1, memory.getSize()):
+            currentValue = memory.read(index2)
+            # if a new lower value is found, store it and its index
+            if currentValue < lowestValue:
+                lowestValue = currentValue
+                lowestIndex = index2
+        
+        # if a lower value was found, swap the positions
+        if index != lowestIndex:
+            memory.swap(index, lowestIndex)
+
+    # The list is sorted after going through every index
+    return memory.getList()
 
 
 mem = Memory(10)
-mem.loadList([12, 54, 112, 5, 23, 89, 120, 58, 4, 1])
+# mem.loadList([12, 54, 112, 5, 23, 89, 120, 58, 4, 1])
+mem.loadList([12122, 5423, 1121, 523, 123, 89, 12, 5, 4, 1])
 
-print(hasDuplicates(mem))
+print(hasDuplicates(mem), mem.getOperations())
+mem.resetOperations()
+
+print(bubbleSort(mem), mem.getOperations())
+mem.resetOperations()
+
+print(selectionSort(mem), mem.getOperations())
+mem.resetOperations()

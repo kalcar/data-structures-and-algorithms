@@ -99,4 +99,20 @@ Exercises -
 
 Optimizing code with and without big O
 
+some algoriths have the same O notation complexity, but is faster than one another
 
+selection sort is about twice as fast as bubble sort, both being O(N^2) complexity
+Big O ignores constants. It categorizes generally in terms of speed.
+Within the same category, then constants matter and the analysis into it begins.
+
+Exercises - 
+    1. Use Big O to describe the time complexity of 4N + 16
+        O(N)
+    2. Use Big O to describe the time complexity of 2N^2
+        O(N^2)
+    3. Use Big O to describe the time complexity of the following function (not shown)
+        O(N)
+    4. Use Big O to describe the time complexity of the following function (not shown)
+        O(N)
+    5. Use Big O to describe the time complexity of the following function (not shown)
+        O(N^2)
