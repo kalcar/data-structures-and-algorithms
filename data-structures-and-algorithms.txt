@@ -1,0 +1,102 @@
+code quality has 2 metrics, maintainability, and efficiency <- efficiency is the focus of DS and Algorithms
+
+reading data using an index takes 1 step.
+
+Practice questions: 
+1. For an array containing 100 elements, provide the number of steps the
+following operations would take:
+a. Reading
+    1 step. reading with a given index only takes 1 step
+b. Searching for a value not contained within the array
+    100 steps. the computer has to look through every address in the array to know it does not contain the value
+c. Insertion at the beginning of the array
+    101 steps. the computer moves the 100 items forward 1 address(100 steps), then inserts the value in the first, now empty address.(1 step)
+d. Insertion at the end of the array
+    1 step. the computer adds a new address and inserts the value. feels like 2 steps, but according to the book its 1.
+e. Deletion at the beginning of the array
+    100 steps. the computer deletes the value in the first address (1), then moves the 99 other items down (99). 
+f. Deletion at the end of the array
+    1 step. delete the value, then update the length of array. again, feels like 2 steps.
+
+2. For an array-based set containing 100 elements, provide the number of
+steps the following operations would take:
+a. Reading
+    1 step
+b. Searching for a value not contained within the array
+    100 steps
+c. Insertion of a new value at the beginning of the set
+    100 + 100 + 1 = 201. the computer searches every index (100), then moves all the values by 1 address(100), then inserts the address(1).
+d. Insertion of a new value at the end of the set
+    101
+e. Deletion at the beginning of the set
+    100
+f. Deletion at the end of the set
+    1
+3. Normally the search operation in an array looks for the first instance of
+a given value. But sometimes we may want to look for every instance of
+a given value. For example, say we want to count how many times the
+value “apple” is found inside an array. How many steps would it take to
+find all the “apples”? Give your answer in terms of N.
+    it would take N steps, since it has to iterate through every address.
+
+
+Ordered lists are in order. shocker.
+Linear search - search through every address/index until the value is found
+Binary search - search through an ordered array by looking at the middle value of the search space, then eliminating
+    half of the space via a high/low comparison. repeat until the space is a single value, or the middle is the value.
+
+As N increases, the number of steps needed to search the ordered lists
+    linear search - increases linearly
+    binary search - increases logarithmically
+
+Big O Notation
+"Steps" in big O notation typically include:
+    arithmatic operations,
+    variable assignments
+    comparison operations
+    function calls
+    accessing elements in an array
+If there are N data elements, how many steps will the algorithm take?
+O(N)
+The soul of O - Ignore coefficients, pretty much. Think of the most significant part of the growth rate.
+    Think limits. if it goes to infinity, who wins in the end?
+Look at the best case scenario and the worst case scenario
+O(logN) <- base 2
+Increases by 1 step every time the data is doubled
+
+find the complexity of the functions in big O notation
+1. Function to see if a year is a leap year
+    O(1)
+2. Function to sum all the values in an array
+    O(N)
+3. Function to see how many times you need to double the number 1 to exceed the number N
+    O(logN) <- base 2
+4. Find all the strings in the array that starts with the letter 'a'
+    O(N)
+5. function to calculate the median from an ordered array
+    O(1)
+
+
+Sorting
+Bubble sort - Compare 2 numbers, swap them if theyre in the wrong order. Move the next pair.
+    repeat when you reach the end of the list. finish when an iteration finds no swaps.
+    Has the complexity of O(N^2)
+
+Exercises - 
+    1. For N = [100, 2000], what are the steps of the complexity O(N), O(logN), O(N^2)
+        [100, 2000], [6, 11], [10000, 4000000] 
+    2. O(N^2) has 256 steps. whats the size?
+        sqrt(256)= 16
+    3. What is the time complexity of the function?
+        O(N^2)
+    4. rewrite the O(N^2) function to be O(N)
+        def getGreatestNumber(array):
+            largest = array[0]
+            for item in array:
+                if item > largest:
+                    largest = item        
+            return largest
+
+Optimizing code with and without big O
+
+
