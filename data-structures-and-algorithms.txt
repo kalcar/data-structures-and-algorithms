@@ -116,3 +116,46 @@ Exercises -
         O(N)
     5. Use Big O to describe the time complexity of the following function (not shown)
         O(N^2)
+
+Optimizing for optimistic Scenarios
+
+its good to look at the worst case scenario, but its best to consider all scenarios
+Big O ignores not only constants, but only cares about the highest order of N
+N^3 + N -> N^3
+The best case scenario is whent the data is already in order
+The average scenario is the most probable scenario, where half of the data is in the wrong order
+
+Different algorithms have different speeds in each scenario, and selecting the best one depends 
+on the data, and what you expect.
+
+Selection Sort
+    Best case:      N^2 / 2
+    Average case:   N^2 / 2
+    Worst case:     N^2 / 2
+Insertion Sort
+    Best case:      N
+    Average case:   N^2 / 2
+    Worst case:     N^2
+
+If the data is nearly sorted, insertion is the way to go. If its nearly reverse, then selection. At random, both are equal
+
+consider if youre looking for the intersection of 2 arrays, meaning the values they have in common.
+you loop over all elements on arr1, each looping over each element in arr2, N^2 complexity
+if theres a value match, add it to result array
+Its N^2 complexity no matter what, even if the two arrays are identical
+if you add a break in the function when a match is found, then the best case becomes O(N)
+
+Exercises:
+    1. Use big O notation to describe the efficiency of the algorithm 3N^2, + 2N + 1
+        O(N^2)
+    2. Use big O notation to describe the efficiency of the algorithm N + log(N)
+        O(N)
+    3. Use big O notation to describe the best, worst, and average case scenatio for the function (not shown)
+        Best: O(1), Average: O(N^2), Worst: O(N^2)
+    4. What is the time complexity of the function? (not shown) Rewrite it to improve its average and best case scenario
+        O(N)
+        def containsX(string):
+            for char in string:
+                if char == "X":
+                    return True
+            return False

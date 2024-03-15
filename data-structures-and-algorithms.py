@@ -275,16 +275,97 @@ def selectionSort(memory: Memory):
     # The list is sorted after going through every index
     return memory.getList()
 
+def insertionSort(memory: Memory):
+    """
+    sorts the internal list in ascending order the custom class 'memory'
+
+    Args:
+        memory (Memory): the custom class that simulates computer memory
+    
+    Returns:
+        list (list): the sorted list
+
+    Raises:
+        Nothing
+
+    """
+    for index in range(1, memory.getSize()): # start on index 1
+
+        tempVal = memory.read(index)
+        compareIndex = index -1
+
+        while compareIndex >= 0:
+            if tempVal < memory.read(compareIndex):
+                memory.swap(compareIndex, compareIndex + 1)
+                compareIndex -= 1
+            else:
+                break
+            
+    
+    return memory.getList()
+
+def intersection(mem1: Memory, mem2: Memory):
+    """
+    Finds the common elements between 2 arrays using the Memory custom class
+
+    Args:
+        mem1 (Memory): the first array to compare
+        mem2 (Memory): the second array to compare
+    
+    Returns:
+        list (List): the items in common 
+
+    Raises:
+        Nothing
+
+    """
+    result = []
+
+    for index in range(mem1.getSize()):
+        item = mem1.read(index)
+        for index2 in range(mem2.getSize()):
+            if item == mem2.read(index2):
+                result.append(item)
+                break # comment this out the unoptimize code
+    return result
+
+
 
 mem = Memory(10)
 # mem.loadList([12, 54, 112, 5, 23, 89, 120, 58, 4, 1])
-mem.loadList([12122, 5423, 1121, 523, 123, 89, 12, 5, 4, 1])
+worstCase = [12122, 5423, 1121, 523, 123, 89, 12, 5, 4, 1]
+bestCase = [1,2,3,4,5,6,7,8,9,10]
+averageCase = [1,2,3,4,5, 10,9,8,7,6]
+cases = {"best": bestCase, "avg": averageCase, "worst": worstCase}
+functions = [bubbleSort, selectionSort, insertionSort]
 
-print(hasDuplicates(mem), mem.getOperations())
-mem.resetOperations()
+# for function in functions:
+#     for case in cases:
+#         mem.loadList(cases[case])
+#         mem.resetOperations()
+#         function(mem)
+#         print("Function:", function.__name__, "\n","Scenario:", case, "\n","N:", len(cases[case]), "\n","Steps:", mem.getOperations())
 
-print(bubbleSort(mem), mem.getOperations())
-mem.resetOperations()
+mem1 = Memory(10)
+mem2 = Memory(10)
+mem1.loadList(averageCase)
+mem2.loadList(averageCase)
 
-print(selectionSort(mem), mem.getOperations())
-mem.resetOperations()
+
+print(intersection(mem1, mem2), mem1.getOperations() + mem2.getOperations())
+
+
+
+# mem.loadList([12122, 5423, 1121, 523, 123, 89, 12, 5, 4, 1])
+
+# print(hasDuplicates(mem), mem.getOperations())
+# mem.resetOperations()
+
+# print(bubbleSort(mem), mem.getOperations())
+# mem.resetOperations()
+
+# print(selectionSort(mem), mem.getOperations())
+# mem.resetOperations()
+
+# print(insertionSort(mem), mem.getOperations())
+# mem.resetOperations()
