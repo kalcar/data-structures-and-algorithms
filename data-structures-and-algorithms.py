@@ -329,6 +329,60 @@ def intersection(mem1: Memory, mem2: Memory):
                 break # comment this out the unoptimize code
     return result
 
+def meanEvenNum(mem: Memory):
+    """
+    Finds the mean (average) of all the even numbers in the array
+
+    Args:
+        mem (Memory): the array containing numbers
+    
+    Returns:
+        mean (float): the mean of the numbers 
+
+    Raises:
+        Nothing (TODO: valueerror if array doesnt have ints)
+
+    """
+    def isEven(num):
+        """
+        Uses bitwise AND to determine if the "1's" bit is flipped (odd)
+
+        Args: 
+            num (int): the value being evaluated
+
+        Returns:
+            (Bool): True if num is even, false if odd
+            (None): if num is 0
+
+        Raises:
+            Nothing
+
+        """
+        if num == 0: # 0 is neither even or odd
+            return None
+        
+        if (num & 0b1 == 1):
+            return False
+        else:
+            return True
+    
+    # initalize the sum and count variables contining the sum and count of even numbers
+    sum = 0
+    count = 0
+    for index in range(mem.getSize()):
+        # Read the value in the array, and if even add it to the cumulative sum and increment count
+        workingVal = mem.read(index)
+        if isEven(workingVal):
+            sum += workingVal
+            count += 1
+    
+    # prevent div by 0. 
+    # divide to find mean
+    if sum == 0 and count == 0:
+        return 0
+    else:
+        return sum/count
+
 
 
 mem = Memory(10)

@@ -37,14 +37,11 @@ print(myArray)
 
 
 
-myvar = 9
 
 # leetcode hard question practice
 # TODO: make a "smart join"
 # TODO: use indexes instead of slices
 
-arr1 = [1,2]
-arr2 = [3,4]
 
 # in both arrays, compare the medians to eachother
 def isEven(num):
@@ -58,17 +55,17 @@ def isEven(num):
     
 
 def findMedian(arr):
-    try:
-        if (isEven(len(arr))):
-            index = (len(arr) >> 1) - 1
-            return (arr[index + 1] + arr[index])/2 , index
-        else:
-            index = len(arr) >> 1
-            return arr[index], index 
-    except Exception as e:
-        print(e, index, arr)
-    
+    if (isEven(len(arr))):
+        index = (len(arr) >> 1) - 1
+        return (arr[index + 1] + arr[index])/2 , index
+    else:
+        index = len(arr) >> 1
+        return arr[index], index 
 
+doprint = True
+def cprint(*args, **kwargs):
+    if doprint:
+        print(*args, **kwargs)
 
 
 def recursiveMedianJoin(arr1, arr2):
@@ -83,30 +80,54 @@ def recursiveMedianJoin(arr1, arr2):
 
 
 
-        # print("array1, median, and index: ", arr1, arr1Median, arr1Index, len(arr1) )
-        # print("array2, median, and index: ", arr2, arr2Median, arr2Index, len(arr2) )
+        cprint("array1, median, and index: ", arr1, "median:", arr1Median, "index:", arr1Index, len(arr1) )
+        cprint("array2, median, and index: ", arr2, "median:", arr2Median, "index:", arr2Index, len(arr2) )
         # make sure arr1 is bigger
         if len(arr1) < len(arr2):
-            recursiveMedianJoin(arr2, arr1)
+            return recursiveMedianJoin(arr2, arr1)
 
         # compare medians
         if arr1Median == arr2Median:
             # if the medians are the same, then merge the two and return. Best case
 
-            combinedArray = arr2[:arr2Index + 1] + arr1 + arr2[arr2Index + 1:] # why is this off by 1?
+            combinedArray = arr2[:arr2Index + 1] + arr1 + arr2[arr2Index + 1:]
             return combinedArray
         elif arr1Median > arr2Median:
             # combine the arrays where the median is in a known half
-            # print("Heres the chunk going at the beginning of arr1: ", arr2[:arr2Index+1], "\n")
-            combinedArray = arr2[:arr2Index +1] + arr1
+            cprint("Heres the chunk going at the beginning of arr1: ", arr2[:arr2Index+1], "\n")
+            # join based on the highest value
+            cprint("matching the lowest value:", arr1[arr1Index-1], arr2[arr2Index])
+            if arr1[arr1Index-1] > arr2[arr2Index-1]:
+                combinedArray = arr2[:arr2Index +1] + arr1
+                
+                cprint("combining:", arr2[:arr2Index +1] , arr1)
+
+            elif arr1[arr1Index-1] < arr2[arr2Index-1]:
+
+                cprint("combining:", arr1[:arr1Index] , arr2[:arr2Index +1] , arr1[arr1Index:])
+                combinedArray = arr1[:arr1Index] + arr2[:arr2Index +1] + arr1[arr1Index:]
+            else:
+                combinedArray = arr2[:arr2Index +1] + arr1
             # the "search" median is now in the lower half of array 1, or in the lower half of array 2
 
             return recursiveMedianJoin(combinedArray, arr2[arr2Index+1:])
             # do the same again, with the leftover array
 
         elif arr1Median < arr2Median:
-            # print("Heres the chunk going at the end of arr1: ", arr2[arr2Index + 1 :], "\n")
-            combinedArray = arr1 + arr2[arr2Index + 1:]
+            cprint("Heres the chunk going at the end of arr1: ", arr2[arr2Index + 1 :], "\n")
+
+            cprint("matching the lowest value:", arr1[arr1Index + 1] , arr2[arr2Index + 1])
+            # want the lowest to touch the median
+            if arr1[arr1Index + 1] < arr2[arr2Index + 1]:
+                cprint("combining: ", arr1 , arr2[arr2Index + 1:])
+                combinedArray = arr1 + arr2[arr2Index + 1:]
+
+            elif arr1[arr1Index + 1] > arr2[arr2Index + 1]:
+                cprint("combining: ", arr1[:arr1Index +1] , arr2[arr2Index+1:] , arr1[arr1Index+1:])
+                combinedArray = arr1[:arr1Index +1] + arr2[arr2Index+1:] + arr1[arr1Index+1:]
+            else:
+                combinedArray = arr1 + arr2[arr2Index + 1:]
+
             # the "search" median is now in the upper half array 1, or in the upper half of array 2
 
             return recursiveMedianJoin(combinedArray, arr2[:arr2Index + 1])
@@ -114,16 +135,57 @@ def recursiveMedianJoin(arr1, arr2):
     
     median , index = (findMedian(arr1))
 
-    if median > arr2[0]:
+    cprint("single element time", arr1, arr2)
+
+    if median > arr2[0]: # going to the front
+        if arr2[0] > arr1[index - 1]:
+            return arr1[:index+1] + arr2 + arr1[index+1:]
+
         return arr2 + arr1
+        
     
-    elif median < arr2[0]:
-        # print(arr1[:index+1] , arr2 , arr1[index+1:])
-        return arr1[:index+1] + arr2 + arr1[index+1:]
+    elif median < arr2[0]: # going to the back
+
+        if arr2[0] < arr1[index + 1]:
+
+            return arr1[:index + 1] + arr2 + arr1[index + 1:]
+        
+        return arr1 + arr2
     
     elif median == arr2[0]:
         # print(arr1[:index+1] , arr2 , arr1[index+1:])
         return arr1[:index+1] + arr2 + arr1[index+1:]
+
+
+def recursiveMedianSearch(arr1, arr2, high1, low1, high2, low2):
+    if len(arr1) < len(arr2):
+        recursiveMedianSearch(arr2, arr1, high2, low2, high1, low1)
+    
+    while len(arr2) > 1: # while there are 2 or more items in array 2
+        # find the median of both arrays
+        arrmedian1 = 0
+        arrmedian2 = 0
+
+        if arrmedian2 == arrmedian1:
+            return arrmedian1
+
+        if arrmedian1 > arrmedian2:
+            pass
+
+        elif arrmedian1 < arrmedian2:
+            pass
+
+
+
+
+
+
+
+arr1 =  [3, 50, 81]
+arr2 = [2, 36, 45]
+
+
+
 
 newarr = recursiveMedianJoin(arr1, arr2)
 print(newarr, findMedian(newarr))
@@ -136,33 +198,36 @@ print(newarr, findMedian(newarr) )
 
 import random
 
-trials = 100
 
-for i in range(trials):
+def runTrials(trials):
+
+    for i in range(trials):
+        
+        arr1 = []
+        arr2 = []
+
+        number = random.random()*2+2
+
+        for j in range(int(number)):
+            arr1.append(int(random.random()*100))
+
+        number = random.random()*2+2
+        for j in range(int(number)):
+            arr2.append(int(random.random()*100))
+
+        arr1.sort()
+        arr2.sort()
+
+        resultarr = recursiveMedianJoin(arr1,arr2)
+        resultmedian, z = findMedian(resultarr)
+
+        checkarr = arr1 + arr2
+        checkarr.sort()
+        checkmedian, z = findMedian(checkarr)
+        print("input:", arr1, arr2)
+        print("Trial:", resultarr, resultmedian)
+        print("result median:",checkarr, checkmedian, "pass?", resultmedian == checkmedian)
     
-    arr1 = []
-    arr2 = []
-
-    number = random.random()*100
-    for j in range(int(number)):
-        arr1.append(random.random()*1000)
-
-    number = random.random()*100
-    for j in range(int(number)):
-        arr2.append(random.random()*1000)
-
-    arr1.sort()
-    arr2.sort()
-
-    resultarr = recursiveMedianJoin(arr1,arr2)
-    resultmedian, z = findMedian(resultarr)
-
-    checkarr = arr1 + arr2
-    checkarr.sort()
-    checkmedian, z = findMedian(checkarr)
-
-    print("result median:", resultmedian , "check: ", checkmedian, "pass?", resultmedian == checkmedian)
-    
-
+# runTrials(100)
     
 
