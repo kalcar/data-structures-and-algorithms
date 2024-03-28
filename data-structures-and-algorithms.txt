@@ -159,3 +159,68 @@ Exercises:
                 if char == "X":
                     return True
             return False
+
+Big O in Everyday Code
+Determining how fast our current code is, is the first step in optimizing it
+
+Consider the cases:
+    adding all the even numbers.
+    The worst case, all numbers are even.
+    step 1 read, step 2, check if even, step 3 add
+    O(3N) or O(N)
+
+    building every 2 letter combination of characters i.e. [a,b,c] -> [aa, ab, ac, ba, bb, bc, ca, cb, cc]
+    two internal loops
+    O(N^2)
+
+    building every 3 letter combination of characters
+    3 internal loops
+    O(N^3)
+
+    *Every higher order of N is much slower. Its a big gap between N^2 and N^3
+
+    Taking the first, middle, and last element of an array
+    O(1)
+
+    reading average temperatures in celsius and fahrenheit
+    loops through all the thermometer temperatures twice, O(2N)
+
+    Clothing labels
+    loop through each clothing item and give it a size 1 thru 5, O(5N)
+
+    Count 1's in a 2d array. its in a nested loop, but its not N^2, its O(N)
+
+    Palindrome detector. start and beginning and end and meet in the middle, comparing if the characters are the same
+    O(N/2) or O(N)
+
+    Getting the product of all combinations in an array. O(N^2)
+
+    Getting the product of all combinations from 2 arrays. 
+    *If there are two datasets use M*
+    O(N*M)
+    But how do we compare it? 
+    Imagine if M is 1, then it would be O(N). If M is equal to N, then O(N^2)
+    O(N*M) is a range between O(N) and O(N^2)
+
+    Password Cracker, brute force just characters
+    O(26^N) -> Very slow
+    Any algorithm where N is the exponent is bad
+
+Exercises:
+    1. Use big O Notation to determine the time complexity of a "100 sum array"
+        A 100 sum array is where the pairs of the first and last, 2nd first and 2nd last, 3rd first and 3rd last, etc. sum to 100
+        O(N/2) -> O(N)
+
+    2. Use Big O Notation to determine the time complexity of the merge array function. 
+        O(M+N) -> O(N) Worst case is 2N and big O ignores constants -> checked it and its correct
+    
+    3. Use Big O Notation to determine the time complexity of the "Needle in a Haystack" algorithm
+        O(N*M)
+
+    3. Use Big O Notation to determine the time complexity of finding the largest product of 3 numbers in an array
+        O(N^3)
+    
+    4. 3. Use Big O Notation to determine the time complexity of tossing out half the resumes until a single one is left.
+        O(LogN)
+
+Blazing Fast Lookups with Hash Tables
