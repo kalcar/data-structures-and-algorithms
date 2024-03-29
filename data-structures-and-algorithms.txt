@@ -224,3 +224,28 @@ Exercises:
         O(LogN)
 
 Blazing Fast Lookups with Hash Tables
+
+Hashtables are called by many names: hashes, maps, hashmaps, dictionaries, and associative arrays.
+Key value pairs
+They have an efficiency of O(1)!
+The hash function translates a value into a "code". The only real requirement is that the hash function returns the same hash for same value each time
+
+Hash the value, then that hash is the "index" of the value. For example, "abc" "123" "cde" -> hashes to "54234" "16634" "22162". those are the "indexes"
+where the computer can read from at O(1) speed.
+It is only 1 directional though. You can't find the kat using the value at constant speed.
+Keys are unique, but values can have duplicates.
+If the hash function produces a collision, meaning that two different values create the same hash, maybe "abc" and "acb" both produce that hash "123123"
+That is a collision
+In a hash table, one solution is to make the address a reference to an array. Then, do a linear search of that array to find the proper value.
+Ex. hash is "8" for both "bad" and "dab". the "index" 8 had an arra. 8 -> [[key1, value1],[ key2, value2]]-> [[bad, value], [dab, value]]
+Worst case, the hash table has the complexity of O(N). Preventing collisions results in O(1) speed.
+There are 3 factors in a hash tables speed:
+    How much data we're storing
+    How many cells are available for storage
+    What hash function are we using
+
+You have to balance the memory, the cells, with what youre using. You dont want a huge number of cells to store 5 values.
+Good hash functions prevent collisions and balance memory usage
+Rule of thumb, 7 data entries need 10 cells.
+Load Factor = elements / cells 
+ideal: 0.7
