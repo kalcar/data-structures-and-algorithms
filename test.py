@@ -69,7 +69,67 @@ class Solution(object):
         elif median == arr2[0]:
             return arr1[:index+1] + arr2 + arr1[index+1:]
         
-mysol = Solution()
+# If statement so I can collapse this particular test case or run it when I want to
+solution = False
+if solution:
 
-arr = [1,2]
-print(arr[1:], arr[:1])
+    mysol = Solution()
+
+    arr = [1,2]
+    print(arr[1:], arr[:1])
+
+
+my_bytes = bytearray('mystring321', encoding='UTF8')
+print(my_bytes)
+mv = memoryview(my_bytes)
+print(mv[0])
+for byte in mv:
+    print(format(byte, "b"))
+
+# how many bits are needed to store an integar
+def intToBits(myint):
+    # format the int as a binary, and return the length of the resulting string
+    return len(format(myint, "b"))
+
+def concatBits(byte1, byte2):
+# shift to the left the number of bits byte2 is, then bitwise OR them to combine
+    return ((byte1 << intToBits(byte2)) | byte2)
+
+# concat all the bytes together
+binary = 0
+for byte in mv:
+    binary = concatBits(byte, binary)
+
+print(format(binary,"b"))
+print(type(binary))
+
+
+# for a given number of bits, continuously XOR the entire binary sequence until the length is shorter than the number
+desiredbits = 5
+
+
+# this is a bad, wasteful method. OH WELL
+binString = format(binary, "b")
+
+
+hashed = 0
+sliceStart = len(binString) -5
+sliceEnd = len(binString)
+
+
+while sliceStart >= 0:
+# note: negative indices dont make this easier
+    working = binString[sliceStart:sliceEnd]
+    print(working, sliceStart, sliceEnd)
+    
+    # make sure both are ints so bitwise XOR works
+    working = int(working, 2)
+    hashed = hashed ^ working
+
+    sliceEnd = sliceStart
+    sliceStart -= desiredbits
+    print(format(hashed, "b"))
+
+print(hashed)
+
+

@@ -44,7 +44,7 @@ print(myArray)
 
 
 # in both arrays, compare the medians to eachother
-def isEven(num):
+def isEven(num: int):
     if num == 0: # 0 is neither even or odd
         return None
     

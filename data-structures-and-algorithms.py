@@ -1,7 +1,9 @@
 # TODO: implement this later <- probably never going to be done tbh
+# MemError is to handle errors within the memory class. inherits from Exception class
 class MemError(Exception):
     pass
 
+# The memory class is a representation of computer memory. Used to count operations and the efficiency of algorithms
 class Memory():
     def __init__(self, memsize: int):
 
@@ -108,6 +110,30 @@ class Memory():
         # assign the values to opposing indices
         self.memoryAddresses[index1] = tempVal2
         self.memoryAddresses[index2] = tempVal
+
+# A hashtable for integers and strings. 
+class HashTable():
+    def __init__(self, hashFunc: function, cells: int = 16):
+        # what hashing function to use. Must return an int
+        self.hashFunc = hashFunc
+        # how many cells to initalize with, default 16.
+        self.cells = cells
+
+    def __getitem__(self, index):
+        pass
+
+    def __setitem__(self, index, value):
+        pass
+
+    def __delitem__(self, index):
+        pass
+    
+    def resizeCells(self):
+        pass
+    
+
+def wrapUpHash(strOrInt, bits):
+    pass
 
 def linearSearch(memory: Memory, value):
     """

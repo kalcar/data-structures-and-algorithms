@@ -249,3 +249,5 @@ Good hash functions prevent collisions and balance memory usage
 Rule of thumb, 7 data entries need 10 cells.
 Load Factor = elements / cells 
 ideal: 0.7
+Hash tables are useful for organization, where data naturally occurs in key value pairs.
+You can convert an array into a hash table for speed. 
